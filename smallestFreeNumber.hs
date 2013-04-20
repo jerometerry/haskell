@@ -158,7 +158,17 @@ printSmallestFreeNumber sfn = printLine $ smallestFreeNumberToString sfn
 -- @param  a The computed smallest free number
 -- @return A string containing the details of the list of numbers and the smallest free number
 smallestFreeNumberToString :: SFNRes -> String
-smallestFreeNumberToString (s, xs, e, a) = s ++ " Expected: " ++ intToString e ++ " Got: " ++ intToString a
+smallestFreeNumberToString (s, xs, e, a) = 
+    s ++ " Expected: " ++ intToString e ++ 
+    " Got: " ++ intToString a ++ " " ++ getResultStatus e a
+
+-- Get a string indicating whether the expected value matches the actual value
+-- @param  e The epxected value
+-- @param  a The actual value
+-- @return "Ok" if e == a, "Failed" otherwise
+getResultStatus :: Int -> Int -> String
+getResultStatus e a | e == a = "Ok"
+                    | otherwise = "Failed"
 
 -- Given a list of lists of numbers, find the smallest free number in eadh list
 -- @param  xs The list of SFNReq to compute smallest free numbers for
@@ -185,7 +195,7 @@ generateTestLists =
         ,("Missing 456789", generateList(1000000,456789), 456789)
     ] ++ generateListsMissingSingleNumber 100
     
- -- Generates a list of natrual numbers from 0 to n, excluding one number in the range
+-- Generates a list of natrual numbers from 0 to n, excluding one number in the range
 -- @param  n The upper bound of the list
 -- @param  e The natural number to exclude from the list
 -- @return A list of all natural numbers from 0 to n, excluding e
