@@ -29,7 +29,7 @@ main = let lists       = generateTestLists
 getMinFree :: SFNReq -> SFNRes
 getMinFree (s, xs, e) = (s, xs, e, getMinFree' xs 0 $ length xs)
 
--- Gest the smallest free number from the given list of natural numbers
+-- Gets the smallest free number from the given list of natural numbers
 --
 -- For example, given the list [0, 1, 2, 4, 5, 6], the smallest free value is 3.
 -- The call stacks is as follows:
@@ -64,7 +64,7 @@ getMinFree (s, xs, e) = (s, xs, e, getMinFree' xs 0 $ length xs)
 -- since len = 0, smallest free number = start = 3
 -- 
 -- @param  xs The list of natural numbers, sorted or unsorted
--- @param  start The value assoicated with index 0 in xs
+-- @param  start The value associated with index 0 in xs
 -- @param  len The number of elements contained in xs
 -- @return The smallest free number in the given list of natural numbers
 getMinFree' ::  [Int] -> Int -> Int -> Int
@@ -195,7 +195,7 @@ generateTestLists =
         ,generateListMissingSingleNumber(1000000,456789)
     ] ++ generateListsMissingSingleNumber 100
     
--- Generates a list of natrual numbers from 0 to n, excluding one number in the range
+-- Generates a list of natural numbers from 0 to n, excluding one number in the range
 -- @param  n The upper bound of the list
 -- @param  e The natural number to exclude from the list
 -- @return A list of all natural numbers from 0 to n, excluding e
