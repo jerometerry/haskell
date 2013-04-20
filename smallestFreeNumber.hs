@@ -105,36 +105,31 @@ getMinFree' xs start len
 computePartition :: Int -> Int -> Int
 computePartition start len = start + 1 + half len
 
--- Partitions a list of integers into 2 lists, one list containing values less than the partition start
--- and one list containing values greater than or equal to the partition start
+-- Partitions a list of integers into 2 lists, one list containing values less than the partition value
+-- and one list containing values greater than or equal to the partition value
 -- @param  xs The list of numbers to partition
 -- @param  pv The value to partition the list with
--- @return A tuple containing two lists, one list with all values less than the partition value
--- and the other list all values greater than or equal to the partition value
+-- @return A tuple containing two lists, one list with all values less than the partition value (left partition)
+-- and the other list all values greater than or equal to the partition value (right partition)
 partitionList :: [Int] -> Int -> ([Int], [Int])          
 partitionList xs pv = partition (< pv) xs   
                    
 -- Combines a list of IO actions into a single action for use in the main method
--- @param  x The first action in the list
--- @param  xs The rest of the actions in the list
 -- @return A single action formed by binding all the actions together    
 bindActions :: [IO ()] -> IO ()
 bindActions = foldr (>>) $ Main.print ""
 
 -- (Obviously) converts an Int to a String
--- @param  n The int to convert
--- @return The string representation of n
+-- @return The string representation of given Int
 intToString :: Int -> String
 intToString = show
 
 -- Print a string to stdout, terminated with CRLF
--- @param  s The string to print
 -- @return the Action that prints the line
 printLine :: String -> IO ()
 printLine = putStrLn
 
 -- Print a string to stdout, not ternimated with CRLF
--- @param  s The string to print
 -- @return The action that prints the line
 print :: String -> IO ()
 print = putStr
@@ -146,7 +141,7 @@ printSmallestFreeNumbers :: [SFNRes] -> [IO ()]
 printSmallestFreeNumbers xs = [printSmallestFreeNumber x | x <- xs]
 
 -- Prints a single result
--- @param  sfn The FNFRes to write to stdout
+-- @param  sfn The SFNRes to write to stdout
 -- @return Action that prints the result to stdout
 printSmallestFreeNumber :: SFNRes -> IO ()
 printSmallestFreeNumber sfn = printLine $ smallestFreeNumberToString sfn
@@ -180,7 +175,7 @@ computeSmallestFreeNumbers xs = [getMinFree x | x <- xs]
 half :: Int -> Int
 half n = n `div` 2
 
- -- Creates a list of list of Int's that can be used to test getMinFree
+ -- Creates a list of list of SFNReq's that can be used to test getMinFree
  -- @return A list of SFNReq's that can be used to test getMinFree
 generateTestLists :: [SFNReq]
 generateTestLists =
