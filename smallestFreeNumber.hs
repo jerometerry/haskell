@@ -117,7 +117,7 @@ partitionList xs pv = partition (< pv) xs
 -- Combines a list of IO actions into a single action for use in the main method
 -- @return A single action formed by binding all the actions together    
 bindActions :: [IO ()] -> IO ()
-bindActions = foldr (>>) $ Main.print ""
+bindActions = foldr (>>) (return ())
 
 -- (Obviously) converts an Int to a String
 -- @return The string representation of given Int
