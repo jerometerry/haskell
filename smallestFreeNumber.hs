@@ -190,9 +190,9 @@ generateTestLists =
         ,("Basic", [0,1,2,3,5,7,9], 4)
         ,("Basic Left", [0,2,3,4,5,6,7,8,9], 1)
         ,("Unsorted", [9,0,4,6,1,3,5,2,8], 7)
-        ,("Missing 756", generateList(1000,756), 756)
-        ,("Missing 666", generateList(1000,666), 666)
-        ,("Missing 456789", generateList(1000000,456789), 456789)
+        ,generateListMissingSingleNumber(1000,756)
+        ,generateListMissingSingleNumber(1000,666)
+        ,generateListMissingSingleNumber(1000000,456789)
     ] ++ generateListsMissingSingleNumber 100
     
 -- Generates a list of natrual numbers from 0 to n, excluding one number in the range
@@ -207,4 +207,11 @@ generateList(n,e) = [x | x <- [0 .. n], x /= e]
 -- @param  n The highest natural number in the lists
 -- @return A list of SFNReq's, each missing one value in the range 0 - n
 generateListsMissingSingleNumber :: Int -> [SFNReq]
-generateListsMissingSingleNumber n = [("Missing " ++ intToString x, generateList(n,x), x) | x <- [0..n]]
+generateListsMissingSingleNumber n = [generateListMissingSingleNumber(n,x) | x <- [0..n]]
+
+-- Generate a single SFNReq 
+-- @param  n The upper bound of the list
+-- @param  e The natural number to exclude from the list
+-- @return The SFNReq
+generateListMissingSingleNumber :: (Int, Int) -> SFNReq
+generateListMissingSingleNumber (n,e) = ("Missing " ++ intToString e, generateList(n,e), e)
